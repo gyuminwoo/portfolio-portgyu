@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.time.LocalDate
-import kotlin.math.log
 
 @Component
 @Profile(value = ["default"])
@@ -18,7 +17,8 @@ class DataInitializer(
     private val linkRepository: LinkRepository,
     private val skillRepository: SkillRepository,
     private val projectRepository: ProjectRepository,
-    private val experienceRepository: ExperienceRepository
+    private val experienceRepository: ExperienceRepository,
+    private val accountRepository: AccountRepository
 ) {
     val log = LoggerFactory.getLogger(DataInitializer::class.java)
     @PostConstruct
@@ -154,5 +154,11 @@ class DataInitializer(
             )
         )
         projectRepository.saveAll(mutableListOf(project1, project2))
+
+        val account = Account(
+            loginId = "admin1",
+            pw = "\$2a\$10\$kD8jfNm.2i4E.MHJkuVsLuL2uerTCP1QYSM.ov/2JKbPSxit5FWkC"
+        )
+        accountRepository.save(account)
     }
 }
